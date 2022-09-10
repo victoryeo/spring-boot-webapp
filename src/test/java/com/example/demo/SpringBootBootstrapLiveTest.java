@@ -4,12 +4,22 @@ import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
 import io.restassured.response.Response;
 import io.restassured.RestAssured;
 import org.springframework.http.MediaType;
+import org.springframework.http.HttpStatus;
+import static org.junit.Assert.assertEquals;
+
+import org.junit.Test;
 import com.example.demo.persistence.model.Book;
 
 public class SpringBootBootstrapLiveTest {
 
   private static final String API_ROOT
     = "http://localhost:8081/api/books";
+
+  @Test
+  public void whenGetAllBooks_thenOK() {
+      final Response response = RestAssured.get(API_ROOT);
+      assertEquals(HttpStatus.OK.value(), response.getStatusCode());
+  }
 
   private Book createRandomBook() {
       Book book = new Book();
