@@ -20,6 +20,9 @@ public class Application {
 
     Web3j web3j = Web3j.build(new HttpService(
       "https://long-orbital-orb.ethereum-goerli.discover.quiknode.pro/f1cbbcf0a86270f3293d0c177ca7c407198f1d74/")); 
+    //for testing with local ganache
+    //Web3j web3j = Web3j.build(new HttpService("http://localhost:8545"));
+    
     //EthBlockNumber result = new EthBlockNumber();
     try {
       EthBlockNumber result = web3j.ethBlockNumber().sendAsync().get();
