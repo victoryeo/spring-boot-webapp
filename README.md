@@ -24,3 +24,9 @@ Requires "./mvnw spring-boot:run" to be run in separate terminal
 ./mvnw clean test
 ./mvnw test
 ```
+
+## solidity smart contract wrappers
+Web3j supports the auto-generation of smart contract function wrappers in Java from Solidity ABI files.
+```
+web3j generate solidity -a=mycontract.abi --outputDir=. --package=com.example.demo
+```
