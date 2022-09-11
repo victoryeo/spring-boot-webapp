@@ -6,9 +6,11 @@ import io.restassured.RestAssured;
 import org.springframework.http.MediaType;
 import org.springframework.http.HttpStatus;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 import com.example.demo.persistence.model.Book;
+import java.util.List;
 
 public class SpringBootBootstrapLiveTest {
 
@@ -19,6 +21,18 @@ public class SpringBootBootstrapLiveTest {
   public void whenGetAllBooks_thenOK() {
       final Response response = RestAssured.get(API_ROOT);
       assertEquals(HttpStatus.OK.value(), response.getStatusCode());
+  }
+
+  @Test
+  public void whenGetBooksByTitle_thenOK() {
+      Book book = createRandomBook();
+      createBookAsUri(book);
+      Response response = RestAssured.get(
+        API_ROOT + "/title/" + book.getTitle());
+      
+      assertEquals(HttpStatus.OK.value(), response.getStatusCode());
+      assertTrue(response.as(List.class)
+        .size() > 0);
   }
 
   private Book createRandomBook() {
