@@ -7,7 +7,10 @@ import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.web3j.protocol.Web3j;
 import org.web3j.protocol.http.HttpService;
 import org.web3j.protocol.core.methods.response.EthBlockNumber;
+import org.web3j.protocol.core.methods.response.TransactionReceipt;
+import org.web3j.crypto.Credentials;
 import java.util.concurrent.ExecutionException;
+import java.math.BigInteger;
 
 @EnableJpaRepositories("com.example.demo.persistence.repo") 
 @EntityScan("com.example.demo.persistence.model")
@@ -30,6 +33,24 @@ public class Application {
     } catch (InterruptedException e) {
       System.out.println(e);
     } catch (ExecutionException e) {
+      System.out.println(e);
+    }
+
+    String privateKey = "<pk>";
+    Credentials credentials = Credentials.create(privateKey);
+    Mycontract contract = Mycontract.load(
+        "0x6B536ED22412275ed260ea97F2a77f3e0d55BBdF", 
+        web3j, 
+        credentials, 
+        BigInteger.valueOf(100), 
+        BigInteger.valueOf(100)
+    );
+    try {
+      Mycontract.ShareDocs transactionReceipt = contract.getCompanyName(BigInteger.valueOf(1)).send();
+      System.out.println("Contract return " + transactionReceipt);
+    } catch (ExecutionException e) {
+      System.out.println(e);
+    } catch (Exception e) {
       System.out.println(e);
     }
 
