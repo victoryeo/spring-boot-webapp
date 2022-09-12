@@ -9,8 +9,11 @@ import org.web3j.protocol.http.HttpService;
 import org.web3j.protocol.core.methods.response.EthBlockNumber;
 import org.web3j.protocol.core.methods.response.TransactionReceipt;
 import org.web3j.crypto.Credentials;
+import org.web3j.tx.gas.DefaultGasProvider;
+
 import java.util.concurrent.ExecutionException;
 import java.math.BigInteger;
+import java.security.MessageDigest;
 
 @EnableJpaRepositories("com.example.demo.persistence.repo") 
 @EntityScan("com.example.demo.persistence.model")
@@ -42,8 +45,7 @@ public class Application {
         "0x6B536ED22412275ed260ea97F2a77f3e0d55BBdF", 
         web3j, 
         credentials, 
-        BigInteger.valueOf(100), 
-        BigInteger.valueOf(100)
+        new DefaultGasProvider()
     );
     try {
       Mycontract.ShareDocs transactionReceipt = contract.getCompanyName(BigInteger.valueOf(1)).send();
